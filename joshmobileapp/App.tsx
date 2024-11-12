@@ -5,10 +5,9 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import type { PropsWithChildren } from 'react';
+import React from 'react';
+import type {PropsWithChildren} from 'react';
 import {
-  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -25,13 +24,12 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import MyButton from './src/components/MyButton';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({ children, title }: SectionProps): React.JSX.Element {
+function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -59,24 +57,10 @@ function Section({ children, title }: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [data, setData] = useState([])
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const handleButtonPress = async () => {
-    const endpoint = `https://fakestoreapi.com/products?limit=5`
-    try {
-      const res = await fetch(endpoint)
-      const res2 = await res.json()
-      console.log('res', JSON.stringify(res2));
-      if(res?.ok){
-        // setData([...])
-      }
-    } catch (error) {
-      console.log('error getting data', error);
-    }
-  }
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -92,14 +76,25 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <MyButton label='Press Me' onPress={handleButtonPress} disabled={false} style={{alignSelf: 'center'}} />
+          <Section title="Step One">
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   sectionContainer: {
